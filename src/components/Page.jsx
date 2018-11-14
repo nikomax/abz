@@ -25,7 +25,6 @@ export default class Page extends Component{
         const self = this;
         axios.get(`${urlAPI}/users?page=${this.state.userPage}&count=${this.state.userCount}`)
             .then(function (response) {
-                console.log(response.data);
                 self.setState({
                     users: response.data.users,
                     totalPages: response.data.total_pages
@@ -43,7 +42,6 @@ export default class Page extends Component{
             const self = this;
             axios.get(`${urlAPI}/users?page=${this.state.userPage}&count=${this.state.userCount}`)
                 .then(function (response) {
-                    console.log(response.data);
                     self.setState({
                         users: [...self.state.users, ...response.data.users]
                     })

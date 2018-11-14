@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import TextInput from './TextInput.jsx';
 import Select from 'react-select';
+import FileInput from './FileInput.jsx';
+import axios from 'axios';
+
+const urlAPI = 'https://frontend-test-assignment-api.abz.agency/api/v1';
 
 export default class Registration extends Component {
     constructor() {
@@ -9,6 +13,7 @@ export default class Registration extends Component {
             name: '',
             email: '',
             phone: '',
+            fileUpload: '',
             selectedOption: null,
             options: [
                 { value: 'chocolate', label: 'Chocolate' },
@@ -16,6 +21,25 @@ export default class Registration extends Component {
                 { value: 'vanilla', label: 'Vanilla' }
             ]
         }
+    }
+
+    componentDidMount() {
+        const self = this;
+        axios.get(`${urlAPI}/positions`)
+            .then(function (response) {
+                console.log(response.data.positions);
+                self.setState({
+                    options: response.data.positions.map(item => {
+                        return {
+                            value: item.name,
+                            label: item.name
+                        }
+                        })
+                })
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     handleName = (e) => {
@@ -40,6 +64,20 @@ export default class Registration extends Component {
 
     handleChange = (selectedOption) => {
         this.setState({ selectedOption });
+    };
+
+    checkSize = (e) => {
+        console.log(e.target.files[0].size);
+        if (e.target.files[0].size > 5242880) {
+            console.log("mnogo");
+            this.setState({
+                fileUpload: ''
+            })
+        } else {
+            this.setState({
+                fileUpload: e.target.value
+            })
+        }
     };
 
     render() {
@@ -96,8 +134,15 @@ export default class Registration extends Component {
                                 />
                             </div>
                             <div className="form__col2">
-
+                                <FileInput
+                                    info="File format jpg up to 5 MB, the minimum size of 70x70px"
+                                    onChange={this.checkSize}
+                                    value={this.state.fileUpload}
+                                />
                             </div>
+                        </div>
+                        <div className="form__btn">
+                            <a href="java-script:void(0)" className="btn">Sign Up</a>
                         </div>
                     </form>
                 </div>
