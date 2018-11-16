@@ -4,7 +4,7 @@ import ManLaptop from "../img/man-laptop-v2.svg";
 export default class Requirements extends Component {
     render() {
         return (
-            <section className="section section--requirements" style={{backgroundImage: 'url(../img/bg-2.jpg)'}}>
+            <section className="section section--requirements" style={{backgroundImage: 'url(../img/bg-2.jpg)'}} id="requirements">
                 <div className="container">
                     <div className="section__header">
                         <h2 className="section__title">General requirements for the test task</h2>

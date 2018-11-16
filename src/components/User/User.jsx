@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import './_user.sass';
+
 export default class User extends Component {
     render() {
         const {photo, name, email, phone, position} = this.props;

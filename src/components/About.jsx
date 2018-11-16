@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 
 import Man from '../img/man-mobile.svg';
+import AnchorLink from "react-anchor-link-smooth-scroll";
 
 export default class About extends Component {
     render() {
         return (
-            <section className="section section--about">
+            <section className="section section--about" id="about">
                 <div className="container">
                     <div className="section__header">
                         <h2 className="section__title">Let's get acquainted</h2>
@@ -28,7 +29,7 @@ export default class About extends Component {
                                     improve user-experience on the web.
                                 </p>
                             </div>
-                            <a href="#" className="link">Sign Up</a>
+                            <AnchorLink className="link" href="#registration">Sign Up</AnchorLink>
                         </div>
                     </div>
                 </div>

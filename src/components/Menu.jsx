@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-
-import NavLink from './NavLink.jsx';
+import AnchorLink from 'react-anchor-link-smooth-scroll'
 
 export default class Menu extends Component{
     constructor() {
@@ -8,19 +7,19 @@ export default class Menu extends Component{
         this.state = {
             menuItems: [
                 {
-                    href: '#',
+                    href: '#about',
                     title: 'About me'
                 },{
-                    href: '#',
+                    href: '#relationships',
                     title: 'Relationships'
                 },{
-                    href: '#',
+                    href: '#requirements',
                     title: 'Requirements'
                 },{
-                    href: '#',
+                    href: '#users',
                     title: 'Users'
                 },{
-                    href: '#',
+                    href: '#registration',
                     title: 'Sign Up'
                 },
 
@@ -32,7 +31,7 @@ export default class Menu extends Component{
             <ul className="nav">
                 {this.state.menuItems.map(item => (
                     <li className="nav__item">
-                        <NavLink href={item.href} title={item.title}/>
+                        <AnchorLink href={item.href}>{item.title}</AnchorLink>
                     </li>
                 ))}
             </ul>

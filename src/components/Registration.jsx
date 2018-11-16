@@ -5,6 +5,7 @@ import FileInput from './FileInput.jsx';
 import axios from 'axios';
 
 const urlAPI = 'https://frontend-test-assignment-api.abz.agency/api/v1';
+var formData = new FormData();
 
 export default class Registration extends Component {
     constructor() {
@@ -14,24 +15,27 @@ export default class Registration extends Component {
             email: '',
             phone: '',
             fileUpload: '',
-            selectedOption: null,
-            options: [
-                { value: 'chocolate', label: 'Chocolate' },
-                { value: 'strawberry', label: 'Strawberry' },
-                { value: 'vanilla', label: 'Vanilla' }
-            ]
+            selectedPosition: null,
+            options: []
         }
     }
 
     componentDidMount() {
         const self = this;
+
+        axios.get(`${urlAPI}/token`)
+            .then(function (response) {
+                axios.defaults.headers.common['Token'] = response.data.token;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         axios.get(`${urlAPI}/positions`)
             .then(function (response) {
-                console.log(response.data.positions);
                 self.setState({
                     options: response.data.positions.map(item => {
                         return {
-                            value: item.name,
+                            value: item.id,
                             label: item.name
                         }
                         })
@@ -45,8 +49,6 @@ export default class Registration extends Component {
     handleName = (e) => {
         this.setState({
             name: e.target.value
-        }, () => {
-            console.log(this.state.name);
         });
     };
 
@@ -62,12 +64,11 @@ export default class Registration extends Component {
         });
     };
 
-    handleChange = (selectedOption) => {
-        this.setState({ selectedOption });
+    handleChange = (selectedPosition) => {
+        this.setState({ selectedPosition });
     };
 
     checkSize = (e) => {
-        console.log(e.target.files[0].size);
         if (e.target.files[0].size > 5242880) {
             console.log("mnogo");
             this.setState({
@@ -75,14 +76,30 @@ export default class Registration extends Component {
             })
         } else {
             this.setState({
-                fileUpload: e.target.value
+                fileUpload: e.target.value,
+                file: e.target.files[0]
             })
         }
     };
 
+    sendData = () => {
+        formData.append ('name', this.state.name);
+        formData.append ('email', this.state.email);
+        formData.append ('phone', this.state.phone);
+        formData.append ('position_id', this.state.selectedPosition.value);
+        formData.append ('photo', this.state.file);
+        axios.post(`${urlAPI}/users`, formData)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+
     render() {
         return (
-            <section className="section section--registration">
+            <section className="section section--registration" id="registration">
                 <div className="container">
                     <div className="section__header">
                         <h2 className="section__title">Register to get a work</h2>
@@ -127,7 +144,7 @@ export default class Registration extends Component {
                         <div className="form__row">
                             <div className="form__col2">
                                 <Select
-                                    value={this.state.selectedOption}
+                                    value={this.state.selectedPosition}
                                     onChange={this.handleChange}
                                     options={this.state.options}
                                     placeholder="Select your position"
@@ -142,7 +159,13 @@ export default class Registration extends Component {
                             </div>
                         </div>
                         <div className="form__btn">
-                            <a href="java-script:void(0)" className="btn">Sign Up</a>
+                            <a
+                                href="java-script:void(0)"
+                                className="btn"
+                                onClick={this.sendData}
+                            >
+                                Sign Up
+                            </a>
                         </div>
                     </form>
                 </div>

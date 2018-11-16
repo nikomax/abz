@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import User from './User.jsx';
+import User from './User/User.jsx';
 
 export default class Users extends Component {
     render() {
         return (
-            <section className="section section--users">
+            <section className="section section--users" id="users">
                 <div className="container">
                     <div className="section__header">
                         <h2 className="section__title">About my relationships with web-development</h2>

@@ -65,7 +65,9 @@ export default class Page extends Component{
                     onMore={this.loadMoreUsers}
                     moreLink={this.state.userPage < this.state.totalPages}
                 />
-                <Registration/>
+                <Registration
+
+                />
             </div>
         )
     }

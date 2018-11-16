@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import AnchorLink from "react-anchor-link-smooth-scroll";
 
 export default class Hero extends Component {
     render() {
@@ -16,7 +17,7 @@ export default class Hero extends Component {
                             </p>
                         </div>
                         <div className="hero__btn">
-                            <a href="#" className="btn btn--fill">Sign Up</a>
+                            <AnchorLink className="btn btn--fill" href="#registration">Sign Up</AnchorLink>
                         </div>
                     </div>
                 </div>

@@ -6,7 +6,7 @@ import JS from '../img/javascript.svg';
 
 const Relationships = () => {
     return (
-        <section className="section section--relationships">
+        <section className="section section--relationships" id="relationships">
             <div className="container">
                 <div className="section__header">
                     <h2 className="section__title">About my relationships with web-development</h2>
